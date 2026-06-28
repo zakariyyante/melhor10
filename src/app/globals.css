@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Vibrant Betting Palette from Logo */
+  --background: #020617;
+  --foreground: #ffffff;
+  --card-bg: #0f172a;
+  
+  /* Logo Colors */
+  --gold-bright: #fbbf24;
+  --gold-dark: #b45309;
+  --emerald-vibrant: #10b981;
+  --emerald-dark: #064e3b;
+  --chip-green: #059669;
+  
+  /* Gradients */
+  --gold-gradient: linear-gradient(135deg, #fef3c7 0%, #fbbf24 50%, #b45309 100%);
+  --emerald-gradient: linear-gradient(135deg, #34d399 0%, #10b981 50%, #064e3b 100%);
+  --chip-gradient: linear-gradient(180deg, #10b981 0%, #059669 100%);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  /* Green/Gold ambient glow */
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+}
+
+@layer utilities {
+  .gold-text {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .emerald-text {
+    background: var(--emerald-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Betting Card with Green/Gold accents */
+  .betting-card {
+    background: #0f172a;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .betting-card:hover {
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* The "10" Chip Style from Logo */
+  .chip-badge {
+    background: var(--chip-gradient);
+    border: 2px solid var(--gold-bright);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+  }
+
+  /* High-Contrast Betting Button */
+  .cta-button {
+    background: var(--gold-gradient);
+    color: #000;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 4px solid var(--gold-dark);
+    transition: all 0.1s;
+  }
+
+  .cta-button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    border-bottom-width: 5px;
+  }
+
+  .cta-button:active {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+  }
+
+  .section-divider {
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--emerald-vibrant), var(--gold-bright), transparent);
+  }
+
+  .glow-green {
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+  }
+
+  .glow-gold {
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+  }
 }
