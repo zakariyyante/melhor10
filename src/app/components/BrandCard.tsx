@@ -94,7 +94,7 @@ export default function BrandCard({ brand, rank, gclid }: BrandCardProps) {
         {/* Right: Bonus & CTA */}
         <div className="flex-1 flex flex-col items-start min-w-0">
           <span className="text-[8px] md:text-[10px] font-black text-emerald-vibrant uppercase tracking-[0.2em] mb-1">Bónus Exclusivo</span>
-          <h3 className="text-lg md:text-2xl font-black text-white leading-tight mb-4 italic truncate w-full">
+          <h3 className="text-sm md:text-xl font-black text-white leading-tight mb-4 italic line-clamp-2 w-full">
             {brand.bonus}
           </h3>
           
