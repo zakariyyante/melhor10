@@ -22,7 +22,17 @@ export const brands: Brand[] = [
     votes: 5921,
     badge: "best_casino",
   },
-  
+  {
+    id: "GinjaCasino",
+    name: "GinjaCasino",
+    logo: "/brands/GINJA.png",
+    rating: 9.9,
+    bonus: "PACOTE DE BOAS-ATÉ €1000 + 555RG",
+    url: "https://bestcpa.online/click?o=500&a=36&sub_id1=GinjaCasino-ANTEPT15&aff_click_id=",
+    isMobile: true,
+    votes: 5921,
+    badge: "new_casino",
+  },
   {
     id: "SpinReelz",
     name: "SpinReelz",
@@ -32,7 +42,6 @@ export const brands: Brand[] = [
     url: "https://spinreelz777.net/dnjreg7bl?subid=SpinReelz-ANTEPT15&visit_id=",
     isMobile: true,
     votes: 5921,
-    badge: "new_casino",
   },
   {
     id: "X3Bet",
