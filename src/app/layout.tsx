@@ -20,8 +20,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // Placeholder
-  const CONVERSION_LABEL = "XXXXXXXXXXXXXXX"; // Placeholder
+  const GA_MEASUREMENT_ID = "AW-18231201653";
+  const CONVERSION_LABEL = "XXXXXXXXXXXXXXX"; // Still a placeholder unless provided
 
   return (
     <html lang="pt">
