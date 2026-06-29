@@ -40,7 +40,12 @@ export default function BrandCard({ brand, rank, gclid }: BrandCardProps) {
   };
 
   const handleCardClick = () => {
-    track("Brand Click", { brand: brand.name });
+    track("Brand Click", { 
+      brand_id: brand.id,
+      brand_name: brand.name,
+      bonus: brand.bonus,
+      gclid: gclid || "none"
+    });
     if (typeof window !== "undefined" && (window as unknown as { gtag_report_conversion?: () => void }).gtag_report_conversion) {
       (window as unknown as { gtag_report_conversion: () => void }).gtag_report_conversion();
     }
