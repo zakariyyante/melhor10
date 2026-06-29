@@ -16,7 +16,9 @@ export default async function Home({
   const params = await searchParams;
   const gclid = typeof params.gclid === "string" ? params.gclid : undefined;
 
-  // Filter brands for mobile modal if gclid is present
+  // Filter brands: mobile-only brands are hidden from the main grid
+  // and only shown in the mobile modal when gclid is present
+  const desktopBrands = brands.filter((b) => !b.isMobile);
   const mobileBrands = brands.filter((b) => b.isMobile);
   const showMobileModal = !!gclid && mobileBrands.length > 0;
 
@@ -40,7 +42,7 @@ export default async function Home({
             </div>
             
             <div className="flex flex-col gap-2">
-              {brands.map((brand, index) => (
+              {desktopBrands.map((brand, index) => (
                 <BrandCard 
                   key={brand.id} 
                   brand={brand} 

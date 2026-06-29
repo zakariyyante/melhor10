@@ -12,12 +12,28 @@ interface BrandCardProps {
     bonus: string;
     url: string;
     votes: number;
+    badge?: "best_casino" | "new_casino" | "fast_withdrawal";
   };
   rank?: number;
   gclid?: string;
 }
 
 export default function BrandCard({ brand, rank, gclid }: BrandCardProps) {
+  const getBadgeConfig = (badge?: string) => {
+    const goldStyle = "bg-gradient-to-r from-gold-bright to-gold-dark text-black shadow-lg shadow-gold-bright/20";
+    switch (badge) {
+      case "best_casino":
+        return { text: "MELHOR CASINO", className: goldStyle };
+      case "new_casino":
+        return { text: "NOVO CASINO", className: goldStyle };
+      case "fast_withdrawal":
+        return { text: "LEVANTAMENTO RÁPIDO", className: goldStyle };
+      default:
+        return null;
+    }
+  };
+
+  const badgeConfig = getBadgeConfig(brand.badge);
   const buildUrl = (url: string, gclidValue?: string) => {
     if (!gclidValue) return url;
     return `${url}${gclidValue}`;
@@ -34,89 +50,59 @@ export default function BrandCard({ brand, rank, gclid }: BrandCardProps) {
   return (
     <div 
       onClick={handleCardClick}
-      className="betting-card group relative rounded-2xl overflow-hidden mb-6"
+      className="betting-card group relative rounded-xl overflow-hidden mb-4 border border-white/5 hover:border-emerald-vibrant/30 transition-all"
     >
-      {/* Top Accent Bar (Green) */}
-      <div className="h-1.5 w-full bg-emerald-vibrant group-hover:bg-gold-bright transition-colors" />
+      {badgeConfig && (
+        <div className={`absolute top-0 left-0 px-3 py-1 text-[9px] font-black uppercase tracking-widest rounded-br-lg z-10 ${badgeConfig.className}`}>
+          {badgeConfig.text}
+        </div>
+      )}
 
-      <div className="p-5 md:p-8 flex flex-col lg:flex-row items-center gap-8">
-        {/* Rank & Logo Section */}
-        <div className="flex flex-col items-center gap-4 min-w-[160px]">
-          <div className="relative">
-            {rank && (
-              <div className="chip-badge absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center z-20 text-white font-black italic text-lg">
-                {rank}
-              </div>
-            )}
-            <div className="relative w-36 h-20 bg-white/5 rounded-xl p-4 flex items-center justify-center shadow-inner border-2 border-emerald-vibrant/20 group-hover:border-gold-bright transition-colors">
-              <Image
-                src={brand.logo}
-                alt={brand.name}
-                width={110}
-                height={70}
-                className="object-contain"
-              />
-            </div>
+      <div className="p-4 flex flex-row items-center gap-4 pt-8">
+        {/* Left: Logo & Rating */}
+        <div className="flex flex-col items-center gap-2 min-w-[100px] md:min-w-[140px]">
+          <div className="relative w-24 h-14 md:w-32 md:h-18 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <Image
+              src={brand.logo}
+              alt={brand.name}
+              width={100}
+              height={60}
+              className="object-contain"
+            />
           </div>
           
-          <div className="flex flex-col items-center bg-black/20 px-4 py-1 rounded-full border border-white/5">
-            <span className="text-2xl font-black italic gold-text">{brand.rating.toFixed(1)}</span>
-            <div className="flex gap-0.5">
+          <div className="flex flex-col items-center">
+            <div className="flex gap-0.5 mb-0.5">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={`text-[10px] ${i < Math.floor(brand.rating / 2) ? "text-gold-bright" : "text-white/10"}`}>
+                <span key={i} className={`text-[10px] md:text-xs ${i < Math.floor(brand.rating / 2) ? "text-gold-bright" : "text-white/10"}`}>
                   ★
                 </span>
               ))}
             </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl md:text-2xl font-black italic text-white">{brand.rating.toFixed(1)}</span>
+              <span className="text-[8px] md:text-[10px] font-bold text-white/30 uppercase">/ 10</span>
+            </div>
           </div>
         </div>
 
-        {/* Bonus & Features (The "Meat") */}
-        <div className="flex-1 text-center lg:text-left">
-          <div className="inline-block px-3 py-1 rounded bg-emerald-vibrant/10 border border-emerald-vibrant/20 mb-3">
-            <span className="text-[10px] font-black text-emerald-vibrant uppercase tracking-widest">Bónus de Boas-Vindas</span>
-          </div>
-          <h3 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 italic">
+        {/* Right: Bonus & CTA */}
+        <div className="flex-1 flex flex-col items-start min-w-0">
+          <span className="text-[8px] md:text-[10px] font-black text-emerald-vibrant uppercase tracking-[0.2em] mb-1">Bónus Exclusivo</span>
+          <h3 className="text-lg md:text-2xl font-black text-white leading-tight mb-4 italic truncate w-full">
             {brand.bonus}
           </h3>
           
-          <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-            {["Levantamentos 24h", "Licença SRIJ", "Odds de Elite"].map((feat) => (
-              <span key={feat} className="flex items-center gap-1.5 text-[10px] font-bold text-white/50 uppercase tracking-widest">
-                <span className="text-emerald-vibrant">✔</span> {feat}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="w-full lg:w-auto flex flex-col items-center gap-3">
-          <button className="cta-button w-full lg:w-56 py-5 rounded-xl text-lg italic transition-all">
-            Visitar Agora
+          <button className="cta-button w-full md:w-auto px-6 py-3 rounded-lg text-[10px] md:text-xs italic transition-all">
+            Jogar no {brand.name}
           </button>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">
-              {brand.votes.toLocaleString()} Apostadores
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-vibrant animate-pulse" />
-          </div>
         </div>
       </div>
 
-      {/* Trust Footer Bar */}
-      <div className="bg-black/30 px-6 py-3 flex flex-wrap justify-between items-center border-t border-white/5 gap-4">
-        <div className="flex gap-6">
-          <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">T&Cs Aplicam-se</span>
-          <span className="text-[9px] font-black text-red-500/50 uppercase tracking-widest">18+ Jogue com Responsabilidade</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <div className="w-4 h-4 rounded bg-emerald-vibrant/20 flex items-center justify-center">
-              <svg className="w-2.5 h-2.5 text-emerald-vibrant" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
-            </div>
-            <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Seguro & Verificado</span>
-          </div>
-        </div>
+      {/* Footer info */}
+      <div className="bg-black/20 px-4 py-1.5 flex justify-start gap-4 border-t border-white/5">
+        <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">T&Cs Aplicam-se</span>
+        <span className="text-[8px] font-bold text-red-500/40 uppercase tracking-widest">18+ Jogue com Responsabilidade</span>
       </div>
     </div>
   );
